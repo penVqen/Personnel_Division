@@ -1,0 +1,43 @@
+﻿<Window x:Class="Personnel_Division.Windows.SanctionsForDH"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Санкции" Height="500" Width="1000">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+
+        <Label Content="Тип санкции" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Margin="10,10,0,0"/>
+        <ComboBox Name="SanctionTypeComboBox" Grid.Row="0" Grid.Column="0" Margin="110,10,10,0" VerticalAlignment="Center" Width="150"/>
+
+        <Label Content="Дата приказа" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Margin="10,10,0,0"/>
+        <TextBox Name="DateTextBox" Grid.Row="0" Grid.Column="1" Margin="130,10,10,0" VerticalAlignment="Center" Width="150"/>
+
+        <Button Content="Найти" Grid.Row="0" Grid.Column="2" Width="100" Margin="10,10,10,0" VerticalAlignment="Center" Background="#D1EEFC" FontWeight="Bold" Click="SearchButton_Click"/>
+        <Button Content="Сбросить" Grid.Row="0" Grid.Column="3" Width="100" Margin="10,10,10,0" VerticalAlignment="Center" Background="#D1EEFC" FontWeight="Bold" Click="ResetButton_Click"/>
+
+        <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" Margin="10" BorderBrush="Gray" BorderThickness="1">
+            <DataGrid x:Name="sanctionsDataGrid" AutoGenerateColumns="False" CanUserAddRows="False" 
+                      CanUserDeleteRows="False" IsReadOnly="True" Margin="10" Width="900" Height="300">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID" Binding="{Binding ID_Sanction}" Width="Auto" MinWidth="50"/>
+                    <DataGridTextColumn Header="Тип санкции" Binding="{Binding Type}" Width="*" MinWidth="100"/>
+                    <DataGridTextColumn Header="Дата приказа" Binding="{Binding Date_writ}" Width="*" MinWidth="100"/>
+                    <DataGridTextColumn Header="Приказ" Binding="{Binding Writ}" Width="*" MinWidth="400"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Border>
+
+        <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+            <Button Content="Выход" Width="100" Margin="10" Background="#D1EEFC" Click="ExitButton_Click" FontWeight="Bold"/>
+        </StackPanel>
+    </Grid>
+</Window>

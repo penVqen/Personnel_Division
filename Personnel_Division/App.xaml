@@ -1,0 +1,8 @@
+﻿<Application x:Class="Personnel_Division.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             StartupUri="Windows/Authentication.xaml">
+    <Application.Resources>
+
+    </Application.Resources>
+</Application>
