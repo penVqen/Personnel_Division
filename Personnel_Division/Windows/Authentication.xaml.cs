@@ -23,7 +23,7 @@ namespace Personnel_Division
 
         private void SetImageSource()
         {
-            string imagePath = @"C:\Users\dimanosov223\Desktop\3 курс\Курсовая 2 семестр\Personnel_Division\Personnel_Division\Images\Logo.png";
+            string imagePath = @"C:\Users\dimanosov223\source\repos\Personnel_Division\Personnel_Division\Images\Logo.png";
             logoImage.Source = new BitmapImage(new Uri(imagePath));
         }
 

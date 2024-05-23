@@ -1,7 +1,8 @@
 ﻿<Window x:Class="Personnel_Division.Windows.WorkersAddEdit"
        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Добавление и редактирование информации о сотрудниках" Height="450" Width="600">
+       WindowStartupLocation="CenterScreen"
+       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+       Title="Добавление и редактирование информации о сотрудниках" Height="500" Width="600">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
@@ -20,39 +21,44 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
+        <Image x:Name="topRightLogoImage" Grid.Row="0" Grid.Column="1" Width="40" Height="40" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,10,0"/>
+
         <TextBlock Grid.Row="1" Grid.Column="0" Text="Имя" Margin="10"/>
-        <TextBox Grid.Row="1" Grid.Column="0" Margin="10,30,10,10"/>
+        <TextBox Grid.Row="1" Grid.Column="0" Margin="10,30,10,10" Name="nameTextBox"/>
 
         <TextBlock Grid.Row="2" Grid.Column="0" Text="Фамилия" Margin="10"/>
-        <TextBox Grid.Row="2" Grid.Column="0" Margin="10,30,10,10"/>
+        <TextBox Grid.Row="2" Grid.Column="0" Margin="10,30,10,10" Name="surnameTextBox"/>
 
         <TextBlock Grid.Row="3" Grid.Column="0" Text="Отчество*" Margin="10"/>
-        <TextBox Grid.Row="3" Grid.Column="0" Margin="10,30,10,10"/>
+        <TextBox Grid.Row="3" Grid.Column="0" Margin="10,30,10,10" Name="middleNameTextBox"/>
 
         <TextBlock Grid.Row="4" Grid.Column="0" Text="Паспортные данные" Margin="10"/>
-        <TextBox Grid.Row="4" Grid.Column="0" Margin="10,30,10,10"/>
+        <TextBox Grid.Row="4" Grid.Column="0" Margin="10,30,10,10" Name="passportDataTextBox"/>
 
         <TextBlock Grid.Row="5" Grid.Column="0" Text="Дата найма" Margin="10"/>
-        <TextBox Grid.Row="5" Grid.Column="0" Margin="10,30,10,10"/>
+        <TextBox Grid.Row="5" Grid.Column="0" Margin="10,30,10,10" Name="dateOfEmploymentTextBox"/>
+
+        <TextBlock Grid.Row="6" Grid.Column="0" Text="Подразделение*" Margin="10"/>
+        <ComboBox x:Name="divisionComboBox" Grid.Row="6" Grid.Column="0" Margin="10,30,10,10"/>
 
         <TextBlock Grid.Row="1" Grid.Column="1" Text="Должность" Margin="10"/>
-        <TextBox Grid.Row="1" Grid.Column="1" Margin="10,30,10,10"/>
+        <TextBox Grid.Row="1" Grid.Column="1" Margin="10,30,10,10" Name="positionTextBox"/>
 
         <TextBlock Grid.Row="2" Grid.Column="1" Text="Разряд*" Margin="10"/>
-        <ComboBox Grid.Row="2" Grid.Column="1" Margin="10,30,10,10"/>
+        <TextBox Grid.Row="2" Grid.Column="1" Margin="10,30,10,10" Name="gradeTextBox"/>
 
         <TextBlock Grid.Row="3" Grid.Column="1" Text="Специальность" Margin="10"/>
-        <TextBox Grid.Row="3" Grid.Column="1" Margin="10,30,10,10"/>
+        <TextBox Grid.Row="3" Grid.Column="1" Margin="10,30,10,10" Name="specializationTextBox"/>
 
         <TextBlock Grid.Row="4" Grid.Column="1" Text="Условия работы" Margin="10"/>
-        <ComboBox Grid.Row="4" Grid.Column="1" Margin="10,30,10,10"/>
+        <ComboBox Grid.Row="4" Grid.Column="1" Margin="10,30,10,10" Name="workingConditionsComboBox"/>
 
         <TextBlock Grid.Row="5" Grid.Column="1" Text="Дата увольнения с работы*" Margin="10"/>
-        <TextBox Grid.Row="5" Grid.Column="1" Margin="10,30,10,10"/>
+        <TextBox Grid.Row="5" Grid.Column="1" Margin="10,30,10,10" Name="terminationDateTextBox"/>
 
         <StackPanel Grid.Row="8" Grid.ColumnSpan="2" Orientation="Horizontal" 
                     HorizontalAlignment="Center" Margin="10">
-            <Button Content="Сохранить" Width="100" Margin="10" Background="#D1EEFC"/>
+            <Button Content="Сохранить" Width="100" Margin="10" Background="#D1EEFC" Click="SaveButton_Click"/>
             <Button Content="Отменить" Width="100" Margin="10" Background="#D1EEFC" Click="CancelButton_Click"/>
         </StackPanel>
     </Grid>

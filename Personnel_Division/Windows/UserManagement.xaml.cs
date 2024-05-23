@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Windows;
+using System.Windows.Media.Imaging;
 using Personnel_Division.Models;
 
 namespace Personnel_Division.Windows
@@ -13,7 +14,14 @@ namespace Personnel_Division.Windows
         {
             InitializeComponent();
             _context = new OtdelKadrovPraktikaContext();
+            SetTopRightImageSource();
             LoadData();
+        }
+
+        private void SetTopRightImageSource()
+        {
+            string imagePath = @"C:\Users\dimanosov223\source\repos\Personnel_Division\Personnel_Division\Images\Logo.png";
+            topRightLogoImage.Source = new BitmapImage(new Uri(imagePath));
         }
 
         private void LoadData()

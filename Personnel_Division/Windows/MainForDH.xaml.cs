@@ -3,6 +3,8 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
+using ClosedXML.Excel;
+using Microsoft.Win32;
 using Personnel_Division.Models;
 
 namespace Personnel_Division.Windows
@@ -42,7 +44,7 @@ namespace Personnel_Division.Windows
 
         private void SetImageSource()
         {
-            string imagePath = @"C:\Users\dimanosov223\Desktop\3 курс\Курсовая 2 семестр\Personnel_Division\Personnel_Division\Images\Logo.png";
+            string imagePath = @"C:\Users\dimanosov223\source\repos\Personnel_Division\Personnel_Division\Images\Logo.png";
             logoImage.Source = new BitmapImage(new Uri(imagePath));
         }
 
@@ -110,10 +112,10 @@ namespace Personnel_Division.Windows
 
         private void LoadComboBoxes()
         {
-            var divisions = _context.Divisions.Select(d => d.Title).ToList();
+            var divisions = _context.Divisions.Select(d => d.Title).Distinct().ToList();
             divisionComboBox.ItemsSource = divisions;
 
-            var posts = _context.Workers.Select(p => p.Post).ToList();
+            var posts = _context.Workers.Select(p => p.Post).Distinct().ToList();
             postComboBox.ItemsSource = posts;
         }
 
@@ -144,6 +146,18 @@ namespace Personnel_Division.Windows
             LoadData();
         }
 
+        private int? GetSelectedWorkerId()
+        {
+            if (workersDataGrid.SelectedItem is null)
+            {
+                MessageBox.Show("Выберите сотрудника", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return null;
+            }
+
+            dynamic selectedWorker = workersDataGrid.SelectedItem;
+            return selectedWorker.ID_Worker;
+        }
+
         private void ResetButton_Click(object sender, RoutedEventArgs e)
         {
             ResetFilters();
@@ -168,20 +182,80 @@ namespace Personnel_Division.Windows
 
         private void ContractsButton_Click(object sender, RoutedEventArgs e)
         {
-            ContractsForDH contractsWindow = new ContractsForDH();
-            contractsWindow.ShowDialog();
+            int? workerId = GetSelectedWorkerId();
+            if (workerId.HasValue)
+            {
+                ContractsForDH contractsWindow = new ContractsForDH(workerId.Value);
+                contractsWindow.ShowDialog();
+            }
         }
 
         private void SanctionsButton_Click(object sender, RoutedEventArgs e)
         {
-            ContractsForDH sanctionsWindow = new ContractsForDH();
-            sanctionsWindow.ShowDialog();
+            int? workerId = GetSelectedWorkerId();
+            if (workerId.HasValue)
+            {
+                SanctionsForDH sanctionsWindow = new SanctionsForDH(workerId.Value);
+                sanctionsWindow.ShowDialog();
+            }
         }
 
         private void VacationsButton_Click(object sender, RoutedEventArgs e)
         {
-            ContractsForDH vacationsWindow = new ContractsForDH();
-            vacationsWindow.ShowDialog();
+            int? workerId = GetSelectedWorkerId();
+            if (workerId.HasValue)
+            {
+                VacationsForDH vacationsWindow = new VacationsForDH(workerId.Value);
+                vacationsWindow.ShowDialog();
+            }
+        }
+
+        private void DivisionReportButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var divisions = _context.Divisions
+                    .Select(d => new
+                    {
+                        d.Title,
+                        WorkerCount = d.Worker_Divisions.Count
+                    })
+                    .ToList();
+
+                using (var workbook = new XLWorkbook())
+                {
+                    var worksheet = workbook.Worksheets.Add("Отчет подразделений");
+
+                    worksheet.Cell(1, 1).Value = "Подразделение";
+                    worksheet.Cell(1, 2).Value = "Количество работников";
+
+                    int currentRow = 2;
+                    foreach (var division in divisions)
+                    {
+                        worksheet.Cell(currentRow, 1).Value = division.Title;
+                        worksheet.Cell(currentRow, 2).Value = division.WorkerCount;
+                        currentRow++;
+                    }
+
+                    SaveFileDialog saveFileDialog = new SaveFileDialog
+                    {
+                        Filter = "Excel files (*.xlsx)|*.xlsx|All files (*.*)|*.*",
+                        DefaultExt = ".xlsx",
+                        FileName = "Отчет_подразделений.xlsx"
+                    };
+
+                    if (saveFileDialog.ShowDialog() == true)
+                    {
+                        string filePath = saveFileDialog.FileName;
+                        workbook.SaveAs(filePath);
+                        MessageBox.Show($"Отчет успешно создан: {filePath}", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Произошла ошибка при создании отчета: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }

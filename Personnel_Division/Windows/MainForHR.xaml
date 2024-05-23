@@ -1,5 +1,6 @@
 ﻿<Window x:Class="Personnel_Division.Windows.MainForHR"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        WindowStartupLocation="CenterScreen"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -27,6 +28,7 @@
                     </StackPanel>
                 </StackPanel>
                 <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" Margin="10,0,0,0">
+                    <Button Content="Отчет подразделений" Width="188" Height="30" Margin="5,0" Background="#D1EEFC" FontWeight="Bold" Click="DivisionReportButton_Click"/>
                     <Button Content="Управление пользователями" Width="188" Height="30" Margin="5,0" Background="#D1EEFC" FontWeight="Bold" Click="UserManagementButton_Click"/>
                     <Button Content="Выход" Width="100" Height="30" Margin="10,0" Background="#D1EEFC" FontWeight="Bold" Click="ExitButton_Click"/>
                 </StackPanel>
@@ -67,12 +69,11 @@
             </StackPanel>
 
             <StackPanel Grid.Column="1" Margin="10,10,10,0">
-                <TextBlock Text="Сотрудники" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+                <TextBlock Text="Сотрудники" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,20"/>
                 <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Height="300">
                     <DataGrid x:Name="workersDataGrid" AutoGenerateColumns="False" CanUserAddRows="False" 
                               CanUserDeleteRows="False" IsReadOnly="True" Margin="0,0,0,20" Width="1454" Height="266">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="ID" Binding="{Binding ID_Worker}" Width="Auto" MinWidth="50"/>
                             <DataGridTextColumn Header="Имя" Binding="{Binding Name}" Width="*" MinWidth="100"/>
                             <DataGridTextColumn Header="Фамилия" Binding="{Binding Surname}" Width="*" MinWidth="100"/>
                             <DataGridTextColumn Header="Отчество" Binding="{Binding Middle_name}" Width="*" MinWidth="100"/>
@@ -88,7 +89,7 @@
                 </ScrollViewer>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,10">
                     <Button Content="Добавить" Width="100" Height="30" Margin="10,0" Background="#D1EEFC" FontWeight="Bold" Click="AddButton_Click"/>
-                    <Button Content="Редактировать" Width="100" Height="30" Margin="10,0" Background="#D1EEFC" FontWeight="Bold"/>
+                    <Button Content="Редактировать" Width="100" Height="30" Margin="10,0" Background="#D1EEFC" FontWeight="Bold" Click="EditButton_Click"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                     <Button Content="Договоры" Width="100" Height="30" Margin="10,0" Background="#D1EEFC" FontWeight="Bold" Click="ContractsButton_Click"/>

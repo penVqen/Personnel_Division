@@ -38,7 +38,7 @@ public partial class Worker
     [Unicode(false)]
     public string Specialization { get; set; }
 
-    public int? Grade_class { get; set; }
+    public string Grade_class { get; set; }
 
     [Column(TypeName = "date")]
     public DateTime Date_employment { get; set; }
@@ -51,7 +51,7 @@ public partial class Worker
     [Unicode(false)]
     public string Working_conditions { get; set; }
 
-    public int Passport_data { get; set; }
+    public string Passport_data { get; set; }
 
     [InverseProperty("ID_WorkerNavigation")]
     public virtual ICollection<Contract> Contracts { get; set; } = new List<Contract>();

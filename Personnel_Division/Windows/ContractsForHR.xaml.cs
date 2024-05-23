@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Windows;
+using System.Windows.Media.Imaging;
 using Personnel_Division.Models;
 
 namespace Personnel_Division.Windows
@@ -8,24 +9,46 @@ namespace Personnel_Division.Windows
     public partial class ContractsForHR : Window
     {
         private readonly OtdelKadrovPraktikaContext _context;
+        private readonly int _workerId;
 
-        public ContractsForHR()
+        public ContractsForHR(int workerId)
         {
             InitializeComponent();
             _context = new OtdelKadrovPraktikaContext();
-            LoadData();
+            _workerId = workerId;
+            SetImageSource();
             LoadContractTypes();
+            LoadData();
+        }
+
+        private void SetImageSource()
+        {
+            string imagePath = @"C:\Users\dimanosov223\source\repos\Personnel_Division\Personnel_Division\Images\Logo.png";
+            topRightLogoImage.Source = new BitmapImage(new Uri(imagePath));
         }
 
         private void LoadData()
         {
-            var contracts = _context.Contracts.ToList();
+            var contracts = _context.Contracts
+                .Where(c => c.ID_Worker == _workerId)
+                .Select(c => new
+                {
+                    c.ID_Contract,
+                    c.Type,
+                    c.Validity_period,
+                    c.Date_conclusion
+                })
+                .ToList();
+
             contractsDataGrid.ItemsSource = contracts;
         }
 
         private void LoadContractTypes()
         {
-            var contractTypes = _context.Contracts.Select(c => c.Type).Distinct().ToList();
+            var contractTypes = _context.Contracts
+                .Select(c => c.Type)
+                .Distinct()
+                .ToList();
             ContractTypeComboBox.ItemsSource = contractTypes;
         }
 
@@ -36,28 +59,34 @@ namespace Personnel_Division.Windows
 
         private void SearchButton_Click(object sender, RoutedEventArgs e)
         {
-            string contractType = (string)ContractTypeComboBox.SelectedItem;
-            string dateString = DateTextBox.Text;
+            string selectedContractType = (string)ContractTypeComboBox.SelectedItem;
+            string dateString = DateTextBox.Text.Trim();
 
-            if (string.IsNullOrWhiteSpace(contractType) && string.IsNullOrWhiteSpace(dateString))
+            if (string.IsNullOrEmpty(selectedContractType) && string.IsNullOrEmpty(dateString))
             {
                 MessageBox.Show("Введите данные для фильтрации", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
-            var filteredContracts = _context.Contracts.ToList();
+            var contracts = _context.Contracts
+                .Where(c => c.ID_Worker == _workerId)
+                .ToList();
 
-            if (!string.IsNullOrWhiteSpace(contractType))
+            if (!string.IsNullOrEmpty(selectedContractType))
             {
-                filteredContracts = filteredContracts.Where(c => c.Type.Contains(contractType)).ToList();
+                contracts = contracts
+                    .Where(c => c.Type == selectedContractType)
+                    .ToList();
             }
 
-            if (!string.IsNullOrWhiteSpace(dateString))
+            if (!string.IsNullOrEmpty(dateString))
             {
-                filteredContracts = filteredContracts.Where(c => c.Date_conclusion == dateString).ToList();
+                contracts = contracts
+                    .Where(c => c.Date_conclusion == dateString)
+                    .ToList();
             }
 
-            contractsDataGrid.ItemsSource = filteredContracts;
+            contractsDataGrid.ItemsSource = contracts;
         }
 
         private void ResetButton_Click(object sender, RoutedEventArgs e)
@@ -65,6 +94,33 @@ namespace Personnel_Division.Windows
             ContractTypeComboBox.SelectedIndex = -1;
             DateTextBox.Text = string.Empty;
             LoadData();
+        }
+
+        private void AddButton_Click(object sender, RoutedEventArgs e)
+        {
+            var addEditWindow = new ContractsAddEdit(_workerId);
+            addEditWindow.ShowDialog();
+            LoadData();
+        }
+
+        private void EditButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (contractsDataGrid.SelectedItem is null)
+            {
+                MessageBox.Show("Пожалуйста, выберите договор для редактирования.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            var selectedContract = contractsDataGrid.SelectedItem as dynamic;
+            int contractId = selectedContract.ID_Contract;
+            var contract = _context.Contracts.FirstOrDefault(c => c.ID_Contract == contractId);
+
+            if (contract != null)
+            {
+                var addEditWindow = new ContractsAddEdit(_workerId, contract);
+                addEditWindow.ShowDialog();
+                LoadData();
+            }
         }
     }
 }

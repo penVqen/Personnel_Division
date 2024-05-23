@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Windows;
+using System.Windows.Media.Imaging;
 using Personnel_Division.Models;
 
 namespace Personnel_Division.Windows
@@ -15,6 +15,13 @@ namespace Personnel_Division.Windows
         {
             InitializeComponent();
             _context = new OtdelKadrovPraktikaContext();
+            SetTopRightImageSource();
+        }
+
+        private void SetTopRightImageSource()
+        {
+            string imagePath = @"C:\Users\dimanosov223\source\repos\Personnel_Division\Personnel_Division\Images\Logo.png";
+            topRightLogoImage.Source = new BitmapImage(new Uri(imagePath));
         }
 
         public UserManagementAddEdit(User user) : this()
@@ -50,16 +57,15 @@ namespace Personnel_Division.Windows
                 return;
             }
 
-            // Check if user with the same login already exists
-            var existingUser = _context.Users.FirstOrDefault(u => u.Login == login);
-            if (existingUser != null && existingUser != _user)
-            {
-                MessageBox.Show($"Пользователь с логином '{login}' уже существует.", "Ошибка сохранения", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-
             if (_user == null)
             {
+                var existingUser = _context.Users.FirstOrDefault(u => u.Login == login);
+                if (existingUser != null)
+                {
+                    MessageBox.Show($"Пользователь с логином '{login}' уже существует.", "Ошибка сохранения", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
                 User newUser = new User
                 {
                     Login = login,
@@ -80,7 +86,6 @@ namespace Personnel_Division.Windows
             _context.SaveChanges();
             Close();
         }
-
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
