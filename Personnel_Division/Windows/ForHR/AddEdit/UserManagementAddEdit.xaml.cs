@@ -38,15 +38,15 @@ namespace Personnel_Division.Windows
             string name = NameTextBox.Text;
             string password = PasswordTextBox.Text;
 
-            if (string.IsNullOrEmpty(name))
-            {
-                MessageBox.Show("Поле 'Имя' не должно быть пустым.", "Ошибка ввода имени", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-
             if (!login.StartsWith("HR") && !login.StartsWith("DH"))
             {
                 MessageBox.Show("Логин должен начинаться или с HR (сотрудник отдела кадров), или DH (начальник подразделения).", "Ошибка ввода логина", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            if (string.IsNullOrEmpty(name))
+            {
+                MessageBox.Show("Поле 'Имя' не должно быть пустым.", "Ошибка ввода имени", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 

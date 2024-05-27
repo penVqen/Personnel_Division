@@ -1,0 +1,85 @@
+﻿<Window x:Class="Personnel_Division.Windows.MainForHR"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Personnel_Division.Windows"
+        xmlns:vc="clr-namespace:Personnel_Division.VisualComponents"
+        mc:Ignorable="d"
+        Title="Отдел кадров Plus" MinHeight="700" MinWidth="1800">
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border Background="#FFFCD6" Padding="10" Grid.Row="0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Image x:Name="logoImage" Width="40" Height="40" Margin="0,0,10,0"/>
+                <StackPanel Grid.Column="1" Orientation="Vertical">
+                    <TextBlock Text="Ваша роль: сотрудник отдела кадров" FontSize="14"/>
+                    <vc:UserInfo x:Name="userInfoControl" />
+                </StackPanel>
+                <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" Margin="10,0,0,0">
+                    <Button Content="Отчет подразделений" Width="188" Height="30" Margin="5,0" Background="#D1EEFC" FontWeight="Bold" Click="DivisionReportButton_Click"/>
+                    <Button Content="Управление пользователями" Width="188" Height="30" Margin="5,0" Background="#D1EEFC" FontWeight="Bold" Click="UserManagementButton_Click"/>
+                    <Button Content="Выход" Width="100" Height="30" Margin="10,0" Background="#D1EEFC" FontWeight="Bold" Click="ExitButton_Click"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <Grid Grid.Row="1" Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
+                <vc:FilterWorkerControl x:Name="userControl"/>
+            </Grid>
+
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="Сотрудники" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,20" Grid.Row="0"/>
+
+                <DataGrid x:Name="workersDataGrid" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" Margin="10" Grid.Row="1">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Имя" Binding="{Binding Name}" Width="*" MinWidth="100" FontSize="16"/>
+                        <DataGridTextColumn Header="Фамилия" Binding="{Binding Surname}" Width="*" MinWidth="100" FontSize="16"/>
+                        <DataGridTextColumn Header="Отчество" Binding="{Binding Middle_name}" Width="*" MinWidth="100" FontSize="16"/>
+                        <DataGridTextColumn Header="Должность" Binding="{Binding Post}" Width="*" MinWidth="200" FontSize="16"/>
+                        <DataGridTextColumn Header="Специальность" Binding="{Binding Specialization}" Width="*" MinWidth="150" FontSize="16"/>
+                        <DataGridTextColumn Header="Разряд" Binding="{Binding Grade_class}" Width="*" MinWidth="100" FontSize="16"/>
+                        <DataGridTextColumn Header="Дата найма" Binding="{Binding Date_employment, StringFormat=\{0:yyyy-MM-dd\}}" Width="*" MinWidth="170" FontSize="16"/>
+                        <DataGridTextColumn Header="Дата увольнения" Binding="{Binding Date_termination, StringFormat=\{0:yyyy-MM-dd\}}" Width="*" MinWidth="170" FontSize="16"/>
+                        <DataGridTextColumn Header="Условия работы" Binding="{Binding Working_conditions}" Width="*" MinWidth="150" FontSize="16"/>
+                        <DataGridTextColumn Header="Паспортные данные" Binding="{Binding Passport_data}" Width="*" MinWidth="150" FontSize="16"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,10" Grid.Row="2">
+                    <Button Content="Добавить" Width="100" Height="30" Margin="10,0" Background="#D1EEFC" FontWeight="Bold" Click="AddButton_Click"/>
+                    <Button Content="Редактировать" Width="100" Height="30" Margin="10,0" Background="#D1EEFC" FontWeight="Bold" Click="EditButton_Click"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="3">
+                    <Button Content="Договоры" Width="100" Height="30" Margin="10,0" Background="#D1EEFC" FontWeight="Bold" Click="ContractsButton_Click"/>
+                    <Button Content="Отпуска" Width="100" Height="30" Margin="10,0" Background="#D1EEFC" FontWeight="Bold" Click="VacationsButton_Click"/>
+                    <Button Content="Санкции" Width="100" Height="30" Margin="10,0" Background="#D1EEFC" FontWeight="Bold" Click="SanctionsButton_Click"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

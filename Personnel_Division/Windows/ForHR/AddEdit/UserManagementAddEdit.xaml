@@ -2,7 +2,7 @@
        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         WindowStartupLocation="CenterScreen"
        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-       Title="Добавление и редактирование информации о пользователях" Height="300" Width="600">
+       Title="Добавление и редактирование информации о пользователях" Height="320" Width="620" MinHeight="300" MinWidth="600">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
@@ -30,8 +30,8 @@
 
         <StackPanel Grid.Row="4" Grid.ColumnSpan="2" Orientation="Horizontal" 
                     HorizontalAlignment="Center" Margin="10">
-            <Button Content="Сохранить" Width="100" Margin="10" Background="#E0F7FF" FontWeight="Bold" Click="SaveButton_Click"/>
-            <Button Content="Отменить" Width="100" Margin="10" Background="#E0F7FF" FontWeight="Bold" Click="CancelButton_Click"/>
+            <Button Content="Сохранить" Width="100" Margin="10" Style="{StaticResource SecButton}" Click="SaveButton_Click"/>
+            <Button Content="Отменить" Width="100" Margin="10" Style="{StaticResource SecButton}" Click="CancelButton_Click"/>
         </StackPanel>
     </Grid>
 </Window>

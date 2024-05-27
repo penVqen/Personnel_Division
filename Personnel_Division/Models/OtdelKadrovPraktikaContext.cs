@@ -25,15 +25,11 @@ public partial class OtdelKadrovPraktikaContext : DbContext
 
     public virtual DbSet<User> Users { get; set; }
 
-    public virtual DbSet<Vacancy> Vacancies { get; set; }
-
     public virtual DbSet<Vacation> Vacations { get; set; }
 
     public virtual DbSet<Worker> Workers { get; set; }
 
     public virtual DbSet<Worker_Division> Worker_Divisions { get; set; }
-
-    public virtual DbSet<Worker_Vacancy> Worker_Vacancies { get; set; }
 
     public virtual DbSet<Worker_Vacation> Worker_Vacations { get; set; }
 
@@ -59,13 +55,6 @@ public partial class OtdelKadrovPraktikaContext : DbContext
             entity.HasKey(e => e.ID_User).HasName("PK__Users__ED4DE44256B6ECB4");
         });
 
-        modelBuilder.Entity<Vacancy>(entity =>
-        {
-            entity.HasOne(d => d.ID_DivisionNavigation).WithMany(p => p.Vacancies)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Vacancy_Division");
-        });
-
         modelBuilder.Entity<Worker_Division>(entity =>
         {
             entity.ToTable("Worker_Division", tb =>
@@ -81,17 +70,6 @@ public partial class OtdelKadrovPraktikaContext : DbContext
             entity.HasOne(d => d.ID_WorkerNavigation).WithMany(p => p.Worker_Divisions)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Worker_Division_Worker");
-        });
-
-        modelBuilder.Entity<Worker_Vacancy>(entity =>
-        {
-            entity.HasOne(d => d.ID_VacancyNavigation).WithMany(p => p.Worker_Vacancies)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Worker_Vacancy_Vacancy");
-
-            entity.HasOne(d => d.ID_WorkerNavigation).WithMany(p => p.Worker_Vacancies)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Worker_Vacancy_Worker");
         });
 
         modelBuilder.Entity<Worker_Vacation>(entity =>

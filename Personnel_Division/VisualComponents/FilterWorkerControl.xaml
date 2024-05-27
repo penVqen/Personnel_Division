@@ -1,0 +1,35 @@
+﻿<UserControl x:Class="Personnel_Division.VisualComponents.FilterWorkerControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d">
+    <StackPanel Width="200" Margin="10,0,10,0">
+        <StackPanel Margin="0,10">
+            <TextBlock Text="Имя"/>
+            <TextBox x:Name="NameTextBox"/>
+        </StackPanel>
+        <StackPanel Margin="0,10">
+            <TextBlock Text="Фамилия"/>
+            <TextBox x:Name="SurnameTextBox"/>
+        </StackPanel>
+        <StackPanel Margin="0,10">
+            <TextBlock Text="Отчество"/>
+            <TextBox x:Name="MiddleNameTextBox"/>
+        </StackPanel>
+        <StackPanel Margin="0,10">
+            <TextBlock Text="Подразделение"/>
+            <ComboBox x:Name="DivisionComboBox" Width="200" Height="20" Margin="0,5" Background="White" HorizontalAlignment="Left"/>
+        </StackPanel>
+        <StackPanel Margin="0,10">
+            <TextBlock Text="Должность"/>
+            <ComboBox x:Name="PostComboBox" Width="200" Height="20" Margin="0,5" Background="White" HorizontalAlignment="Left"/>
+        </StackPanel>
+        <StackPanel Margin="0,10">
+            <TextBlock Text="Паспортные данные"/>
+            <TextBox x:Name="PassportTextBox"/>
+        </StackPanel>
+        <Button Content="Найти" Width="150" Height="30" Margin="0,10" Background="#D1EEFC" FontWeight="Bold" Click="SearchButton_Click"/>
+        <Button Content="Сбросить" Width="150" Height="30" Margin="0,10" Background="#D1EEFC" FontWeight="Bold" Click="ResetButton_Click"/>
+    </StackPanel>
+</UserControl>

@@ -22,8 +22,5 @@ public partial class Division
     public string Title { get; set; }
 
     [InverseProperty("ID_DivisionNavigation")]
-    public virtual ICollection<Vacancy> Vacancies { get; set; } = new List<Vacancy>();
-
-    [InverseProperty("ID_DivisionNavigation")]
     public virtual ICollection<Worker_Division> Worker_Divisions { get; set; } = new List<Worker_Division>();
 }

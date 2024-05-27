@@ -63,8 +63,5 @@ public partial class Worker
     public virtual ICollection<Worker_Division> Worker_Divisions { get; set; } = new List<Worker_Division>();
 
     [InverseProperty("ID_WorkerNavigation")]
-    public virtual ICollection<Worker_Vacancy> Worker_Vacancies { get; set; } = new List<Worker_Vacancy>();
-
-    [InverseProperty("ID_WorkerNavigation")]
     public virtual ICollection<Worker_Vacation> Worker_Vacations { get; set; } = new List<Worker_Vacation>();
 }
